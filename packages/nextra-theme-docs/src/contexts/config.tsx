@@ -5,17 +5,10 @@ import React, {
   useContext,
   useState
 } from 'react'
-import { PageOpts } from 'nextra'
 import { ThemeProvider } from 'next-themes'
-import { Context, DocsThemeConfig } from '../types'
+import { Context, Config } from '../types'
 import { DEFAULT_THEME } from '../constants'
 import { MenuProvider } from './menu'
-
-type Config = DocsThemeConfig &
-  Pick<
-    PageOpts,
-    'unstable_flexsearch' | 'newNextLinkBehavior' | 'title' | 'meta'
-  >
 
 const ConfigContext = createContext<Config>({
   title: '',

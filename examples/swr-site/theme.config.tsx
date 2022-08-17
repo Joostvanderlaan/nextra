@@ -69,8 +69,7 @@ const config: DocsThemeConfig = {
       </>
     );
   },
-  head() {
-    const config = useConfig();
+  head({ config }) {
     const description =
       config.meta.description ||
       "SWR is a React Hooks library for data fetching. SWR first returns the data from cache (stale), then sends the fetch request (revalidate), and finally comes with the up-to-date data again.";

@@ -24,7 +24,14 @@ export interface DocsThemeConfig {
   footerText?: ReactNode | FC
   footerEditLink?: ReactNode | FC
   logo?: ReactNode | FC
-  head?: ReactNode | FC
+  head?:
+    | ReactNode
+    // Inside <NextHead /> we can't use hooks https://github.com/vercel/next.js/issues/23559#issuecomment-828080139
+    // so passing locale and config as props
+    | FC<{
+        locale: string
+        config: Config
+      }>
   direction?: 'ltr' | 'rtl'
   i18n?: { locale: string; text: string; direction?: string }[]
   floatTOC?: boolean
@@ -73,3 +80,9 @@ export type SearchResult = {
   prefix?: ReactNode
   children: ReactNode
 }
+
+export type Config = DocsThemeConfig &
+  Pick<
+    PageOpts,
+    'unstable_flexsearch' | 'newNextLinkBehavior' | 'title' | 'meta'
+  >

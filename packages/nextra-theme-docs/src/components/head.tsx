@@ -1,12 +1,15 @@
 import React, { ReactElement } from 'react'
 import NextHead from 'next/head'
 import { useTheme } from 'next-themes'
+import { useRouter } from 'next/router'
 
 import { renderComponent, renderString, useMounted } from '../utils'
 import { useConfig } from '../contexts'
+import { DEFAULT_LOCALE } from '../constants'
 
 export function Head(): ReactElement {
   const config = useConfig()
+  const { locale = DEFAULT_LOCALE } = useRouter()
   const { theme, systemTheme } = useTheme()
   const renderedTheme = theme === 'system' ? systemTheme : theme
   const mounted = useMounted()
@@ -14,7 +17,8 @@ export function Head(): ReactElement {
   return (
     <NextHead>
       <title>{config.title + renderString(config.titleSuffix)}</title>
-      {renderComponent(config.head)}
+      {/* @ts-expect-error -- Inside <NextHead />  we can't use hooks, so it's valid to pass locale and config in this case */}
+      {renderComponent(config.head, { locale, config })}
       {config.unstable_faviconGlyph ? (
         <link
           rel="icon"
